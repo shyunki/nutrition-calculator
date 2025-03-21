@@ -1,0 +1,1237 @@
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="mode-toggle" id="modeToggle">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="info-tooltip" id="infoTooltip">
+                <i class="fas fa-info"></i>
+            </div>
+            <h1>전문가용 매크로 영양소 계산기</h1>
+            <p>최적의 영양 섭취와 신체 구성을 위한 맞춤형 매크로 영양소 계산</p>
+        </div>
+        
+        <div class="tab-container">
+            <div class="tab active" data-tab="calculator">
+                <i class="fas fa-calculator"></i>계산기
+            </div>
+            <div class="tab" data-tab="results">
+                <i class="fas fa-chart-pie"></i>결과
+            </div>
+            <div class="tab" data-tab="meal-suggestions">
+                <i class="fas fa-utensils"></i>식단 제안
+            </div>
+            <div class="tab" data-tab="tips">
+                <i class="fas fa-lightbulb"></i>영양 팁
+            </div>
+            <div class="tab" data-tab="help">
+                <i class="fas fa-question-circle"></i>도움말
+            </div>
+        </div>
+        
+        <div id="calculatorSection" class="section active">
+            <form id="macroForm">
+                <div class="calculator-form">
+                    <h3 class="section-title">개인 정보</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="gender">성별 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">기초 대사량 계산에 영향을 미칩니다.</span></span></label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="genderMale" name="gender" value="male" checked>
+                                        <label for="genderMale"><i class="fas fa-mars"></i> 남성</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="genderFemale" name="gender" value="female">
+                                        <label for="genderFemale"><i class="fas fa-venus"></i> 여성</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="age">나이 (세) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">나이가 증가할수록 기초 대사량이 감소합니다.</span></span></label>
+                                <input type="number" id="age" min="15" max="100" value="30" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="weight">체중 (kg) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">현재 체중을 정확하게 입력하세요.</span></span></label>
+                                <input type="number" id="weight" min="30" max="200" step="0.1" value="70" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="height">키 (cm) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">정확한 키를 입력하세요.</span></span></label>
+                                <input type="number" id="height" min="100" max="250" value="170" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bodyFat">체지방률 (%) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">선택 사항: 입력하면 더 정확한 계산이 가능합니다.</span></span></label>
+                        <input type="number" id="bodyFat" min="3" max="50" step="0.1" placeholder="선택 사항">
+                    </div>
+                    
+                    <h3 class="section-title">활동 수준 및 목표</h3>
+                    
+                    <div class="form-group">
+                        <label for="activityLevel">활동 수준 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">일상 활동과 운동을 모두 고려하세요.</span></span></label>
+                        <div class="custom-select">
+                            <select id="activityLevel" required>
+                                <option value="sedentary">좌식 생활 (거의 운동 안함)</option>
+                                <option value="light">가벼운 활동 (주 1-3회 운동)</option>
+                                <option value="moderate" selected>보통 활동 (주 3-5회 운동)</option>
+                                <option value="active">활발한 활동 (주 6-7회 운동)</option>
+                                <option value="veryActive">매우 활발한 활동 (하루 2회 운동)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="exerciseType">주요 운동 유형 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">주로 어떤 유형의 운동을 하시나요?</span></span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="exerciseStrength" name="exerciseType" value="strength" checked>
+                                <label for="exerciseStrength"><i class="fas fa-dumbbell"></i> 근력 운동</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="exerciseCardio" name="exerciseType" value="cardio">
+                                <label for="exerciseCardio"><i class="fas fa-running"></i> 유산소 운동</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="exerciseMixed" name="exerciseType" value="mixed">
+                                <label for="exerciseMixed"><i class="fas fa-sync-alt"></i> 혼합</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="exerciseNone" name="exerciseType" value="none">
+                                <label for="exerciseNone"><i class="fas fa-ban"></i> 없음</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goal">건강 목표 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">목표에 따라 권장 매크로 비율이 달라집니다.</span></span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="goalLose" name="goal" value="lose">
+                                <label for="goalLose"><i class="fas fa-weight"></i> 체중 감량</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="goalMaintain" name="goal" value="maintain" checked>
+                                <label for="goalMaintain"><i class="fas fa-balance-scale"></i> 체중 유지</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="goalGain" name="goal" value="gain">
+                                <label for="goalGain"><i class="fas fa-plus"></i> 체중 증가</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="goalBuild" name="goal" value="build">
+                                <label for="goalBuild"><i class="fas fa-dumbbell"></i> 근육 증가</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">식이 선호도</h3>
+                    
+                    <div class="form-group">
+                        <label for="dietType">식이 유형 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">특별한 식이 요구사항이 있나요?</span></span></label>
+                        <div class="custom-select">
+                            <select id="dietType" required>
+                                <option value="standard" selected>일반식</option>
+                                <option value="keto">케토제닉</option>
+                                <option value="lowCarb">저탄수화물</option>
+                                <option value="highProtein">고단백</option>
+                                <option value="vegetarian">채식주의</option>
+                                <option value="vegan">비건</option>
+                                <option value="mediterranean">지중해식</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mealFrequency">일일 식사 횟수 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">하루에 몇 번 식사를 하시나요?</span></span></label>
+                        <div class="custom-select">
+                            <select id="mealFrequency" required>
+                                <option value="3">3회 (아침, 점심, 저녁)</option>
+                                <option value="4" selected>4회 (3끼 + 간식)</option>
+                                <option value="5">5회 (3끼 + 간식 2회)</option>
+                                <option value="6">6회 (소량씩 자주)</option>
+                            </select>
+                        </div>
+                    </div>
+                  <div class="form-group">
+                        <label for="macroCustomization">매크로 영양소 비율 커스터마이징 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">매크로 영양소 비율을 직접 조절할 수 있습니다.</span></span></label>
+                        <div class="custom-select">
+                            <select id="macroCustomization">
+                                <option value="auto" selected>자동 계산 (목표 기반)</option>
+                                <option value="custom">직접 설정</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="customMacroSection" style="display: none;">
+                        <div class="form-group">
+                            <label for="customProtein">단백질 비율 (%)</label>
+                            <div class="range-slider">
+                                <input type="range" id="customProtein" min="10" max="50" value="30">
+                                <div id="proteinValue" class="range-value">30%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customCarbs">탄수화물 비율 (%)</label>
+                            <div class="range-slider">
+                                <input type="range" id="customCarbs" min="10" max="70" value="45">
+                                <div id="carbsValue" class="range-value">45%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customFat">지방 비율 (%)</label>
+                            <div class="range-slider">
+                                <input type="range" id="customFat" min="10" max="70" value="25">
+                                <div id="fatValue" class="range-value">25%</div>
+                            </div>
+                        </div>
+                        
+                        <div id="totalPercentage" class="form-group" style="text-align: center; color: var(--primary-dark); font-weight: bold;">
+                            총합: 100%
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="calculateBtn">
+                        <i class="fas fa-calculator"></i> 매크로 영양소 계산하기
+                    </button>
+                </div>
+            </form>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>매크로 영양소 계산 중...</p>
+            </div>
+        </div>
+        
+        <div id="resultsSection" class="section">
+            <h2 class="section-title">맞춤형 매크로 영양소 계산 결과</h2>
+            
+            <div class="result-card">
+                <h3><i class="fas fa-fire"></i> 일일 에너지 요구량</h3>
+                <p>기초 대사량 (BMR): <span id="bmr">0</span> kcal</p>
+                <p>일일 활동 칼로리: <span id="activityCalories">0</span> kcal</p>
+                <p>일일 총 에너지 소비량 (TDEE): <span id="tdee">0</span> kcal</p>
+                <p>목표 달성을 위한 권장 칼로리: <span id="targetCalories">0</span> kcal</p>
+                
+                <div class="calorie-adjustment">
+                    <h4>칼로리 조정 <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">목표에 맞게 칼로리를 미세 조정할 수 있습니다.</span></span></h4>
+                    <div class="range-slider">
+                        <input type="range" id="calorieAdjustment" min="-20" max="20" value="0" step="5">
+                        <div id="adjustmentValue" class="range-value">±0%</div>
+                    </div>
+                    
+                    <div class="compare-results">
+                        <div class="compare-item">
+                            <div class="label">원래 권장량</div>
+                            <div id="originalCalories" class="value">0 kcal</div>
+                        </div>
+                        <div class="compare-item">
+                            <div class="label">조정된 권장량</div>
+                            <div id="adjustedCalories" class="value">0 kcal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <h3><i class="fas fa-chart-pie"></i> 매크로 영양소 비율</h3>
+                <div id="macroChart" class="macro-chart">
+                    <div id="proteinChart" class="chart-protein">단백질</div>
+                    <div id="carbsChart" class="chart-carbs">탄수화물</div>
+                    <div id="fatChart" class="chart-fat">지방</div>
+                </div>
+                
+                <div class="macro-data">
+                    <div class="macro-data-item protein-data">
+                        <h4><i class="fas fa-drumstick-bite"></i> 단백질</h4>
+                        <div id="proteinGrams" class="value">0g</div>
+                        <div id="proteinPercent" class="sub-value">0%</div>
+                        <div id="proteinCalories" class="sub-value">0 kcal</div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="proteinProgress" class="progress-fill protein-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="macro-data-item carbs-data">
+                        <h4><i class="fas fa-bread-slice"></i> 탄수화물</h4>
+                        <div id="carbsGrams" class="value">0g</div>
+                        <div id="carbsPercent" class="sub-value">0%</div>
+                        <div id="carbsCalories" class="sub-value">0 kcal</div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="carbsProgress" class="progress-fill carbs-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="macro-data-item fat-data">
+                        <h4><i class="fas fa-oil-can"></i> 지방</h4>
+                        <div id="fatGrams" class="value">0g</div>
+                        <div id="fatPercent" class="sub-value">0%</div>
+                        <div id="fatCalories" class="sub-value">0 kcal</div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="fatProgress" class="progress-fill fat-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="meal-plan">
+                <div class="meal-plan-header">
+                    <h3><i class="fas fa-utensils"></i> 식사별 매크로 영양소 분배</h3>
+                    <div class="export-btn" id="exportMealPlan">
+                        <i class="fas fa-download"></i> PDF 저장
+                    </div>
+                </div>
+                
+                <div class="meal-distribution">
+                    <div class="meal-distribution-item">
+                        <i class="fas fa-sun"></i> 아침: 25%
+                    </div>
+                    <div class="meal-distribution-item">
+                        <i class="fas fa-cloud-sun"></i> 점심: 35%
+                    </div>
+                    <div class="meal-distribution-item">
+                        <i class="fas fa-moon"></i> 저녁: 30%
+                    </div>
+                    <div class="meal-distribution-item">
+                        <i class="fas fa-apple-alt"></i> 간식: 10%
+                    </div>
+                </div>
+                
+                <div class="meal-cards">
+                    <div class="meal-card">
+                        <h4><i class="fas fa-sun"></i> 아침 식사</h4>
+                        <div class="meal-macros">
+                            <div class="meal-macro-item">
+                                <div>단백질</div>
+                                <div id="breakfastProtein" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>탄수화물</div>
+                                <div id="breakfastCarbs" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>지방</div>
+                                <div id="breakfastFat" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>칼로리</div>
+                                <div id="breakfastCalories" class="value">0 kcal</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meal-card">
+                        <h4><i class="fas fa-cloud-sun"></i> 점심 식사</h4>
+                        <div class="meal-macros">
+                            <div class="meal-macro-item">
+                                <div>단백질</div>
+                                <div id="lunchProtein" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>탄수화물</div>
+                                <div id="lunchCarbs" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>지방</div>
+                                <div id="lunchFat" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>칼로리</div>
+                                <div id="lunchCalories" class="value">0 kcal</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meal-card">
+                        <h4><i class="fas fa-moon"></i> 저녁 식사</h4>
+                        <div class="meal-macros">
+                            <div class="meal-macro-item">
+                                <div>단백질</div>
+                                <div id="dinnerProtein" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>탄수화물</div>
+                                <div id="dinnerCarbs" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>지방</div>
+                                <div id="dinnerFat" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>칼로리</div>
+                                <div id="dinnerCalories" class="value">0 kcal</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meal-card">
+                        <h4><i class="fas fa-apple-alt"></i> 간식</h4>
+                        <div class="meal-macros">
+                            <div class="meal-macro-item">
+                                <div>단백질</div>
+                              <div id="snacksProtein" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>탄수화물</div>
+                                <div id="snacksCarbs" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>지방</div>
+                                <div id="snacksFat" class="value">0g</div>
+                            </div>
+                            <div class="meal-macro-item">
+                                <div>칼로리</div>
+                                <div id="snacksCalories" class="value">0 kcal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nutrient-timing">
+                    <h3><i class="fas fa-clock"></i> 운동 전후 영양소 타이밍</h3>
+                    <div class="timing-options">
+                        <div class="timing-option">
+                            <h5>운동 전 (1-2시간)</h5>
+                            <p>탄수화물: <span id="preWorkoutCarbs">0g</span></p>
+                            <p>단백질: <span id="preWorkoutProtein">0g</span></p>
+                            <p>지방: <span id="preWorkoutFat">0g</span></p>
+                            <p>총 칼로리: <span id="preWorkoutCalories">0 kcal</span></p>
+                        </div>
+                        <div class="timing-option">
+                            <h5>운동 후 (30분-1시간)</h5>
+                            <p>탄수화물: <span id="postWorkoutCarbs">0g</span></p>
+                            <p>단백질: <span id="postWorkoutProtein">0g</span></p>
+                            <p>지방: <span id="postWorkoutFat">0g</span></p>
+                            <p>총 칼로리: <span id="postWorkoutCalories">0 kcal</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="save-share">
+                    <button class="save-btn" id="saveResults">
+                        <i class="fas fa-save"></i> 결과 저장
+                    </button>
+                    <button class="share-btn" id="shareResults">
+                        <i class="fas fa-share-alt"></i> 공유하기
+                    </button>
+                    <button class="print-btn" id="printResults">
+                        <i class="fas fa-print"></i> 인쇄하기
+                    </button>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                <p><strong>참고사항:</strong> 이 계산기는 평균적인 값을 기준으로 산출된 결과이며, 개인의 건강 상태, 유전적 요인, 의학적 조건 등에 따라 실제 필요량은 다를 수 있습니다. 전문가의 상담 후 참고용으로만 활용하시기 바랍니다.</p>
+            </div>
+        </div>
+        
+        <div id="mealSuggestionsSection" class="section">
+            <h2 class="section-title">목표에 맞는 식품 추천</h2>
+            
+            <div class="food-suggestions">
+                <div class="food-category">
+                    <h4><i class="fas fa-drumstick-bite"></i> 단백질 공급원</h4>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-drumstick-bite"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">닭 가슴살</div>
+                                <div class="food-item-macros">31g 단백질 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">연어</div>
+                                <div class="food-item-macros">25g 단백질 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-egg"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">계란</div>
+                                <div class="food-item-macros">13g 단백질 / 2개</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-cheese"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">그릭 요거트</div>
+                                <div class="food-item-macros">10g 단백질 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">두부</div>
+                                <div class="food-item-macros">8g 단백질 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">렌틸콩</div>
+                                <div class="food-item-macros">9g 단백질 / 100g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="food-category">
+                    <h4><i class="fas fa-bread-slice"></i> 탄수화물 공급원</h4>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">현미</div>
+                                <div class="food-item-macros">25g 탄수화물 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-wheat"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">오트밀</div>
+                                <div class="food-item-macros">27g 탄수화물 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-carrot"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">고구마</div>
+                                <div class="food-item-macros">20g 탄수화물 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-apple-alt"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">바나나</div>
+                                <div class="food-item-macros">23g 탄수화물 / 1개</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-bread-slice"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">통밀빵</div>
+                                <div class="food-item-macros">15g 탄수화물 / 1슬라이스</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-pepper-hot"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">퀴노아</div>
+                                <div class="food-item-macros">21g 탄수화물 / 100g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="food-category">
+                    <h4><i class="fas fa-oil-can"></i> 건강한 지방 공급원</h4>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-lemon"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">아보카도</div>
+                                <div class="food-item-macros">15g 지방 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">견과류</div>
+                                <div class="food-item-macros">50g 지방 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">연어</div>
+                                <div class="food-item-macros">13g 지방 / 100g</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">올리브 오일</div>
+                                <div class="food-item-macros">14g 지방 / 1큰술</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-egg"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">계란 노른자</div>
+                                <div class="food-item-macros">5g 지방 / 1개</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-cheese"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">치즈</div>
+                                <div class="food-item-macros">9g 지방 / 30g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="food-category">
+                    <h4><i class="fas fa-utensils"></i> 균형 잡힌 식사 예시</h4>
+                    <div class="food-items">
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">아침 식사</div>
+                                <div class="food-item-macros">그릭 요거트 + 견과류 + 바나나</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-cloud-sun"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">점심 식사</div>
+                                <div class="food-item-macros">닭 가슴살 + 현미 + 채소</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">저녁 식사</div>
+                                <div class="food-item-macros">연어 + 고구마 + 아보카도</div>
+                            </div>
+                        </div>
+                        <div class="food-item">
+                            <div class="food-item-icon">
+                                <i class="fas fa-apple-alt"></i>
+                            </div>
+                            <div class="food-item-info">
+                                <div class="food-item-name">간식</div>
+                                <div class="food-item-macros">프로틴 쉐이크 + 과일</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div id="tipsSection" class="section">
+            <h2 class="section-title">영양 및 건강 팁</h2>
+            
+            <div class="tips-list">
+                <div class="tip-card">
+                    <h4><i class="fas fa-balance-scale"></i> 매크로 영양소 균형</h4>
+                    <p>매크로 영양소 비율이 중요하지만, 식품의 질도 고려하세요. 가공식품보다는 자연식품을 선택하세요.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-tint"></i> 수분 섭취</h4>
+                    <p>하루에 8-10잔의 물을 마시는 것이 좋습니다. 체중 1kg당 30-40ml의 물을 섭취하세요.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-utensils"></i> 소식 다식</h4>
+                    <p>하루 3끼 대신 4-6회로 나누어 먹으면 혈당 조절과 에너지 유지에 도움이 됩니다.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-carrot"></i> 식이섬유</h4>
+                    <p>하루 25-30g의 식이섬유를 섭취하세요. 변비 예방과 장 건강에 도움이 됩니다.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-drumstick-bite"></i> 단백질 타이밍</h4>
+                    <p>근육 회복을 위해 운동 후 30분 이내에 단백질을 섭취하세요.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-bed"></i> 충분한 수면</h4>
+                    <p>7-9시간의 충분한 수면은 호르몬 균형과 신체 회복에 필수적입니다.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-walking"></i> 신체 활동</h4>
+                    <p>하루 30분 이상의 신체 활동은 대사를 촉진하고 체중 관리에 도움이 됩니다.</p>
+                </div>
+                <div class="tip-card">
+                    <h4><i class="fas fa-heart"></i> 건강한 지방</h4>
+                    <p>오메가-3 지방산이 풍부한 식품을 섭취하여 심혈관 건강을 유지하세요.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="helpSection" class="section">
+            <h2 class="section-title">도움말 및 FAQ</h2>
+            
+            <div class="help-section">
+                <div class="help-item">
+                    <h4>매크로 영양소란 무엇인가요?</h4>
+                    <p>매크로 영양소는 우리 몸에 에너지를 공급하는 3대 영양소인 단백질, 탄수화물, 지방을 의미합니다. 각 영양소는 다른 역할을 하며, 건강한 신체를 위해 균형 잡힌 섭취가 중요합니다.</p>
+                </div>
+                <div class="help-item">
+                    <h4>매크로 영양소 계산은 어떻게 하나요?</h4>
+                    <p>매크로 영양소 계산은 일일 칼로리 요구량을 먼저 계산한 후, 목표에 따라 단백질, 탄수화물, 지방의 비율을 적용하여 각 영양소의 그램 수를 산출합니다.</p>
+                </div>
+                <div class="help-item">
+                    <h4>체중 감량을 위한 최적의 매크로 비율은?</h4>
+                    <p>체중 감량을 위해서는 일반적으로 단백질 30-40%, 탄수화물 30-40%, 지방 20-30%의 비율이 권장됩니다. 단, 개인차가 있으므로 자신에게 맞는 비율을 찾는 것이 중요합니다.</p>
+                </div>
+                <div class="help-item">
+                    <h4>근육 증가를 위한 최적의 매크로 비율은?</h4>
+                    <p>근육 증가를 위해서는 단백질 25-35%, 탄수화물 45-55%, 지방 20-30%의 비율이 권장됩니다. 충분한 단백질과 에너지 공급을 위한 탄수화물이 중요합니다.</p>
+                </div>
+                <div class="help-item">
+                    <h4>저탄수화물 식이는 어떤가요?</h4>
+                    <p>저탄수화물 식이는 단기간의 체중 감량에 효과적일 수 있으나, 장기적으로는 균형 잡힌 식이를 유지하는 것이 중요합니다. 특히 운동을 많이 하는 사람은 충분한 탄수화물 섭취가 필요합니다.</p>
+                </div>
+                <div class="help-item">
+                    <h4>바쁜 일상에서 매크로 영양소 관리 팁은?</h4>
+                    <p>식사 계획과 준비를 미리 하는 것이 중요합니다. 주말에 일주일 식단을 계획하고, 식사를 미리 준비해두면 바쁜 평일에도 균형 잡힌 영양소 섭취가 가능합니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>겐이츠의 건강생활 블로그</p>
+            <p>이 계산기는 교육 및 정보 제공 목적으로만 제작되었으며, 의학적 조언을 대체하지 않습니다.</p>
+            <p>특정 건강 상태나 질환이 있는 경우, 반드시 의료 전문가와 상담하시기 바랍니다.</p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab navigation
+            const tabs = document.querySelectorAll('.tab');
+            const sections = document.querySelectorAll('.section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-tab') + 'Section';
+                    
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show target section
+                    document.getElementById(targetId).classList.add('active');
+                    
+                    // Update active tab
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Toggle custom macro section
+            const macroCustomization = document.getElementById('macroCustomization');
+            const customMacroSection = document.getElementById('customMacroSection');
+            
+            macroCustomization.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customMacroSection.style.display = 'block';
+                } else {
+                    customMacroSection.style.display = 'none';
+                }
+            });
+            
+            // Update custom macro percentages
+            const customProtein = document.getElementById('customProtein');
+            const customCarbs = document.getElementById('customCarbs');
+            const customFat = document.getElementById('customFat');
+            const proteinValue = document.getElementById('proteinValue');
+            const carbsValue = document.getElementById('carbsValue');
+            const fatValue = document.getElementById('fatValue');
+            const totalPercentage = document.getElementById('totalPercentage');
+            
+            function updateMacroPercentages() {
+                const protein = parseInt(customProtein.value);
+                const carbs = parseInt(customCarbs.value);
+                const fat = parseInt(customFat.value);
+                const total = protein + carbs + fat;
+                
+                proteinValue.textContent = protein + '%';
+                carbsValue.textContent = carbs + '%';
+                fatValue.textContent = fat + '%';
+                
+                totalPercentage.textContent = `총합: ${total}%`;
+                
+                if (total !== 100) {
+                    totalPercentage.style.color = '#F44336';
+                } else {
+                    totalPercentage.style.color = '';
+                }
+            }
+            
+            customProtein.addEventListener('input', updateMacroPercentages);
+            customCarbs.addEventListener('input', updateMacroPercentages);
+            customFat.addEventListener('input', updateMacroPercentages);
+            
+            // Calorie adjustment slider
+            const calorieAdjustment = document.getElementById('calorieAdjustment');
+            const adjustmentValue = document.getElementById('adjustmentValue');
+            const originalCalories = document.getElementById('originalCalories');
+            const adjustedCalories = document.getElementById('adjustedCalories');
+            
+            calorieAdjustment.addEventListener('input', function() {
+                const value = parseInt(this.value);
+                if (value > 0) {
+                    adjustmentValue.textContent = `+${value}%`;
+                } else {
+                    adjustmentValue.textContent = `${value}%`;
+                }
+                
+                const original = parseInt(originalCalories.textContent);
+                if (!isNaN(original)) {
+                    const adjusted = Math.round(original * (1 + value / 100));
+                    adjustedCalories.textContent = `${adjusted} kcal`;
+                    updateMacrosWithAdjustedCalories(adjusted);
+                }
+            });
+            
+            // Dark mode toggle
+            const modeToggle = document.getElementById('modeToggle');
+            const body = document.body;
+            
+            modeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                
+                // Update icon
+                const icon = this.querySelector('i');
+                if (body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            // Show/hide info tooltip
+            const infoTooltip = document.getElementById('infoTooltip');
+            const helpTab = document.querySelector('[data-tab="help"]');
+            
+            infoTooltip.addEventListener('click', function() {
+                helpTab.click();
+            });
+            
+            // Activity level multipliers
+            const activityMultipliers = {
+                sedentary: 1.2,
+                light: 1.375,
+                moderate: 1.55,
+                active: 1.725,
+                veryActive: 1.9
+            };
+            
+            // Goal calorie adjustments
+            const goalAdjustments = {
+                lose: 0.8, // 20% deficit
+                maintain: 1,
+                gain: 1.1, // 10% surplus
+                build: 1.15 // 15% surplus for muscle building
+            };
+            
+            // Macro ratios based on goals
+            const macroRatios = {
+                lose: { protein: 0.35, carbs: 0.35, fat: 0.3 },
+                maintain: { protein: 0.3, carbs: 0.45, fat: 0.25 },
+                gain: { protein: 0.25, carbs: 0.5, fat: 0.25 },
+                build: { protein: 0.3, carbs: 0.5, fat: 0.2 }
+            };
+            
+            // Meal distribution
+            const mealDistribution = {
+                breakfast: { percent: 0.25 },
+                lunch: { percent: 0.35 },
+                dinner: { percent: 0.3 },
+                snacks: { percent: 0.1 }
+            };
+          // Special diet macro adjustments
+            const dietTypeAdjustments = {
+                standard: { protein: 0, carbs: 0, fat: 0 },
+                keto: { protein: 0.05, carbs: -0.35, fat: 0.3 },
+                lowCarb: { protein: 0.05, carbs: -0.2, fat: 0.15 },
+                highProtein: { protein: 0.1, carbs: -0.1, fat: 0 },
+                vegetarian: { protein: -0.05, carbs: 0.1, fat: -0.05 },
+                vegan: { protein: -0.1, carbs: 0.15, fat: -0.05 },
+                mediterranean: { protein: 0, carbs: 0.05, fat: -0.05 }
+            };
+            
+            // Form elements
+            const form = document.getElementById('macroForm');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const loadingDiv = document.getElementById('loading');
+            const resultsSection = document.
+            getElementById('resultsSection');
+            
+            // Calculate BMR using Mifflin-St Jeor equation
+            function calculateBMR(gender, weight, height, age) {
+                if (gender === 'male') {
+                    return 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    return 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+            }
+            
+            // Function to update macros with adjusted calories
+            function updateMacrosWithAdjustedCalories(adjustedCalories) {
+                // Get current macro percentages
+                const proteinPercentage = parseFloat(document.getElementById('proteinPercent').textContent) / 100;
+                const carbsPercentage = parseFloat(document.getElementById('carbsPercent').textContent) / 100;
+                const fatPercentage = parseFloat(document.getElementById('fatPercent').textContent) / 100;
+                
+                // Calculate new macro values
+                const proteinCalories = adjustedCalories * proteinPercentage;
+                const carbsCalories = adjustedCalories * carbsPercentage;
+                const fatCalories = adjustedCalories * fatPercentage;
+                
+                const proteinGrams = Math.round(proteinCalories / 4);
+                const carbsGrams = Math.round(carbsCalories / 4);
+                const fatGrams = Math.round(fatCalories / 9);
+                
+                // Update macro details
+                document.getElementById('proteinGrams').textContent = `${proteinGrams}g`;
+                document.getElementById('proteinCalories').textContent = `${Math.round(proteinCalories)} kcal`;
+                
+                document.getElementById('carbsGrams').textContent = `${carbsGrams}g`;
+                document.getElementById('carbsCalories').textContent = `${Math.round(carbsCalories)} kcal`;
+                
+                document.getElementById('fatGrams').textContent = `${fatGrams}g`;
+                document.getElementById('fatCalories').textContent = `${Math.round(fatCalories)} kcal`;
+                
+                // Update meal distribution
+                updateMealDistribution(proteinGrams, carbsGrams, fatGrams, adjustedCalories);
+                
+                // Update workout nutrition
+                updateWorkoutNutrition(proteinGrams, carbsGrams, fatGrams, adjustedCalories);
+            }
+            
+            // Function to update meal distribution
+            function updateMealDistribution(proteinGrams, carbsGrams, fatGrams, totalCalories) {
+                const meals = ['breakfast', 'lunch', 'dinner', 'snacks'];
+                
+                meals.forEach(meal => {
+                    const mealProtein = Math.round(proteinGrams * mealDistribution[meal].percent);
+                    const mealCarbs = Math.round(carbsGrams * mealDistribution[meal].percent);
+                    const mealFat = Math.round(fatGrams * mealDistribution[meal].percent);
+                    const mealCalories = Math.round(totalCalories * mealDistribution[meal].percent);
+                    
+                    document.getElementById(`${meal}Protein`).textContent = `${mealProtein}g`;
+                    document.getElementById(`${meal}Carbs`).textContent = `${mealCarbs}g`;
+                    document.getElementById(`${meal}Fat`).textContent = `${mealFat}g`;
+                    document.getElementById(`${meal}Calories`).textContent = `${mealCalories} kcal`;
+                });
+            }
+            
+            // Function to update workout nutrition
+            function updateWorkoutNutrition(proteinGrams, carbsGrams, fatGrams, totalCalories) {
+                // Pre-workout nutrition (higher carbs, moderate protein, low fat)
+                const preWorkoutProtein = Math.round(proteinGrams * 0.2);
+                const preWorkoutCarbs = Math.round(carbsGrams * 0.3);
+                const preWorkoutFat = Math.round(fatGrams * 0.1);
+                const preWorkoutCalories = (preWorkoutProtein * 4) + (preWorkoutCarbs * 4) + (preWorkoutFat * 9);
+                
+                // Post-workout nutrition (higher protein, higher carbs, very low fat)
+                const postWorkoutProtein = Math.round(proteinGrams * 0.3);
+                const postWorkoutCarbs = Math.round(carbsGrams * 0.3);
+                const postWorkoutFat = Math.round(fatGrams * 0.05);
+                const postWorkoutCalories = (postWorkoutProtein * 4) + (postWorkoutCarbs * 4) + (postWorkoutFat * 9);
+                
+                // Update pre-workout nutrition
+                document.getElementById('preWorkoutProtein').textContent = `${preWorkoutProtein}g`;
+                document.getElementById('preWorkoutCarbs').textContent = `${preWorkoutCarbs}g`;
+                document.getElementById('preWorkoutFat').textContent = `${preWorkoutFat}g`;
+                document.getElementById('preWorkoutCalories').textContent = `${Math.round(preWorkoutCalories)} kcal`;
+                
+                // Update post-workout nutrition
+                document.getElementById('postWorkoutProtein').textContent = `${postWorkoutProtein}g`;
+                document.getElementById('postWorkoutCarbs').textContent = `${postWorkoutCarbs}g`;
+                document.getElementById('postWorkoutFat').textContent = `${postWorkoutFat}g`;
+                document.getElementById('postWorkoutCalories').textContent = `${Math.round(postWorkoutCalories)} kcal`;
+            }
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading animation
+                loadingDiv.style.display = 'block';
+                
+                // Simulate loading time (can remove in production)
+                setTimeout(() => {
+                    // Get form values
+                    const gender = document.querySelector('input[name="gender"]:checked').value;
+                    const age = parseFloat(document.getElementById('age').value);
+                    const weight = parseFloat(document.getElementById('weight').value);
+                    const height = parseFloat(document.getElementById('height').value);
+                    const bodyFat = document.getElementById('bodyFat').value ? parseFloat(document.getElementById('bodyFat').value) : null;
+                    const activityLevel = document.getElementById('activityLevel').value;
+                    const exerciseType = document.querySelector('input[name="exerciseType"]:checked').value;
+                    const goal = document.querySelector('input[name="goal"]:checked').value;
+                    const dietType = document.getElementById('dietType').value;
+                    const macroCustomization = document.getElementById('macroCustomization').value;
+                    
+                    // Calculate BMR
+                    const bmr = calculateBMR(gender, weight, height, age);
+                    
+                    // Calculate activity calories
+                    const activityCalories = Math.round(bmr * (activityMultipliers[activityLevel] - 1));
+                    
+                    // Calculate TDEE
+                    const tdee = Math.round(bmr + activityCalories);
+                    
+                    // Calculate target calories based on goal
+                    const targetCalories = Math.round(tdee * goalAdjustments[goal]);
+                    
+                    // Determine macro ratios based on goal, exercise type, and diet type
+                    let proteinPercentage, carbsPercentage, fatPercentage;
+                    
+                    if (macroCustomization === 'custom') {
+                        // Use custom macro percentages
+                        proteinPercentage = parseInt(customProtein.value) / 100;
+                        carbsPercentage = parseInt(customCarbs.value) / 100;
+                        fatPercentage = parseInt(customFat.value) / 100;
+                    } else {
+                        // Start with base ratios based on goal
+                        proteinPercentage = macroRatios[goal].protein;
+                        carbsPercentage = macroRatios[goal].carbs;
+                        fatPercentage = macroRatios[goal].fat;
+                        
+                        // Adjust based on diet type
+                        proteinPercentage += dietTypeAdjustments[dietType].protein;
+                        carbsPercentage += dietTypeAdjustments[dietType].carbs;
+                        fatPercentage += dietTypeAdjustments[dietType].fat;
+                        
+                        // Ensure percentages are not negative and sum to 1
+                        proteinPercentage = Math.max(0.1, proteinPercentage);
+                        carbsPercentage = Math.max(0.1, carbsPercentage);
+                        fatPercentage = Math.max(0.1, fatPercentage);
+                        
+                        const total = proteinPercentage + carbsPercentage + fatPercentage;
+                        proteinPercentage /= total;
+                        carbsPercentage /= total;
+                        fatPercentage /= total;
+                        
+                        // Adjust for exercise type
+                        if (exerciseType === 'strength' && goal !== 'lose') {
+                            proteinPercentage += 0.05;
+                            carbsPercentage -= 0.05;
+                        } else if (exerciseType === 'cardio' && goal !== 'lose') {
+                            carbsPercentage += 0.05;
+                            fatPercentage -= 0.05;
+                        }
+                    }
+                    
+                    // Calculate macro grams
+                    const proteinCalories = targetCalories * proteinPercentage;
+                    const carbsCalories = targetCalories * carbsPercentage;
+                    const fatCalories = targetCalories * fatPercentage;
+                    
+                    const proteinGrams = Math.round(proteinCalories / 4);
+                    const carbsGrams = Math.round(carbsCalories / 4);
+                    const fatGrams = Math.round(fatCalories / 9);
+                    
+                    // Update the results
+                    document.getElementById('bmr').textContent = Math.round(bmr);
+                    document.getElementById('activityCalories').textContent = activityCalories;
+                    document.getElementById('tdee').textContent = tdee;
+                    document.getElementById('targetCalories').textContent = targetCalories;
+                    
+                    // Set original calories for adjustment
+                    document.getElementById('originalCalories').textContent = targetCalories;
+                    document.getElementById('adjustedCalories').textContent = `${targetCalories} kcal`;
+                    
+                    // Update macro percentages in chart
+                    document.getElementById('proteinChart').style.width = `${proteinPercentage * 100}%`;
+                    document.getElementById('carbsChart').style.width = `${carbsPercentage * 100}%`;
+                    document.getElementById('fatChart').style.width = `${fatPercentage * 100}%`;
+                    
+                    // Update macro details
+                    document.getElementById('proteinGrams').textContent = `${proteinGrams}g`;
+                    document.getElementById('proteinPercent').textContent = `${Math.round(proteinPercentage * 100)}%`;
+                    document.getElementById('proteinCalories').textContent = `${Math.round(proteinCalories)} kcal`;
+                    document.getElementById('proteinProgress').style.width = '100%';
+                    
+                    document.getElementById('carbsGrams').textContent = `${carbsGrams}g`;
+                    document.getElementById('carbsPercent').textContent = `${Math.round(carbsPercentage * 100)}%`;
+                    document.getElementById('carbsCalories').textContent = `${Math.round(carbsCalories)} kcal`;
+                    document.getElementById('carbsProgress').style.width = '100%';
+                    
+                    document.getElementById('fatGrams').textContent = `${fatGrams}g`;
+                    document.getElementById('fatPercent').textContent = `${Math.round(fatPercentage * 100)}%`;
+                    document.getElementById('fatCalories').textContent = `${Math.round(fatCalories)} kcal`;
+                    document.getElementById('fatProgress').style.width = '100%';
+                    
+                    // Update meal distribution
+                    updateMealDistribution(proteinGrams, carbsGrams, fatGrams, targetCalories);
+                    
+                    // Update workout nutrition
+                    updateWorkoutNutrition(proteinGrams, carbsGrams, fatGrams, targetCalories);
+                    
+                    // Hide loading animation
+                    loadingDiv.style.display = 'none';
+                    
+                    // Show results tab
+                    document.querySelector('[data-tab="results"]').click();
+                }, 800);
+            });
+          // Save, Share and Print functionality
+            document.getElementById('saveResults').addEventListener('click', function() {
+                alert('결과가 저장되었습니다.');
+            });
+            
+            document.getElementById('shareResults').addEventListener('click', function() {
+                alert('결과 공유 링크가 생성되었습니다.');
+            });
+            
+            document.getElementById('printResults').addEventListener('click', function() {
+                window.print();
+            });
+            
+            document.getElementById('exportMealPlan').addEventListener('click', function() {
+                alert('식단 계획이 PDF로 저장되었습니다.');
+            });
+            
+            // Custom select functionality
+            function customizeSelects() {
+                const customSelects = document.querySelectorAll('.custom-select');
+                
+                customSelects.forEach(select => {
+                    const selectElement = select.querySelector('select');
+                    const selectedDiv = document.createElement('div');
+                    selectedDiv.classList.add('select-selected');
+                    selectedDiv.innerHTML = selectElement.options[selectElement.selectedIndex].innerHTML;
+                    select.appendChild(selectedDiv);
+                    
+                    const itemsDiv = document.createElement('div');
+                    itemsDiv.classList.add('select-items', 'select-hide');
+                    
+                    for (let i = 0; i < selectElement.options.length; i++) {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.innerHTML = selectElement.options[i].innerHTML;
+                        optionDiv.addEventListener('click', function() {
+                            const selectElement = this.parentNode.parentNode.querySelector('select');
+                            const selectedDiv = this.parentNode.previousSibling;
+                            
+                            for (let j = 0; j < selectElement.options.length; j++) {
+                                if (selectElement.options[j].innerHTML === this.innerHTML) {
+                                    selectElement.selectedIndex = j;
+                                    selectedDiv.innerHTML = this.innerHTML;
+                                    
+                                    const sameAsSelected = this.parentNode.querySelector('.same-as-selected');
+                                    if (sameAsSelected) {
+                                        sameAsSelected.classList.remove('same-as-selected');
+                                    }
+                                    
+                                    this.classList.add('same-as-selected');
+                                    
+                                    // Trigger change event
+                                    const event = new Event('change');
+                                    selectElement.dispatchEvent(event);
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            selectedDiv.click();
+                        });
+                        
+                        itemsDiv.appendChild(optionDiv);
+                    }
+                    
+                    select.appendChild(itemsDiv);
+                    
+                    selectedDiv.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeAllSelect(this);
+                        this.nextSibling.classList.toggle('select-hide');
+                        this.classList.toggle('select-arrow-active');
+                    });
+                });
+                
+                function closeAllSelect(element) {
+                    const items = document.querySelectorAll('.select-items');
+                    const selected = document.querySelectorAll('.select-selected');
+                    
+                    for (let i = 0; i < selected.length; i++) {
+                        if (element !== selected[i]) {
+                            selected[i].classList.remove('select-arrow-active');
+                        }
+                    }
+                    
+                    for (let i = 0; i < items.length; i++) {
+                        if (element !== items[i].previousSibling) {
+                            items[i].classList.add('select-hide');
+                        }
+                    }
+                }
+                
+                document.addEventListener('click', closeAllSelect);
+            }
+            
+            // Initialize custom selects
+            customizeSelects();
+        });
+    </script>
+</body>
+</html>
